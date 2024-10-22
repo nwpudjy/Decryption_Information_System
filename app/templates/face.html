@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>人脸主页</title>
+<meta name="author" content="DeathGhost" />
+<link rel="stylesheet" type="text/css" href="../static/css/sty.css" />
+<style>
+body{height:100%;background-image: linear-gradient(-90deg, #0140DF, #C20044);overflow:hidden;}
+canvas{z-index:-1;position:absolute;}
+</style>
+
+</head>
+<body>
+<dl class="admin_login">
+ <dt>
+  <strong>人脸主页</strong>
+  <em>Face Management Home</em>
+ </dt>
+ <dd>
+  <input type="button" class="login_btn" value="人脸登录" onclick=u() />
+ </dd>
+ <dd>
+  <input type="button" value="人脸注册" class="register_btn"/>
+ </dd>
+ <dd>
+  <input type="button" value="人脸修改" class="update_btn"/>
+ </dd>
+ <dd>
+  <p>© 版权所有</p>
+ </dd>
+</dl>
+</body>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/verificationNumbers.js" tppabs="js/verificationNumbers.js"></script>
+<script src="../static/js/Particleground.js" tppabs="js/Particleground.js"></script>
+<script src="../static/js/config.js" tppabs="js/config.js"></script>
+<script src="../static/js/layer_v2.1/layer/layer.js"></script>
+<script src="{% static 'js/jquary.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+
+<script>
+    function u(){
+        window.location.href = '/renlian/';
+    }
+
+$(document).ready(function() {
+
+  //粒子背景特效
+  $('body').particleground({
+    {#dotColor: '#5cbdaa',#}
+    {#lineColor: '#5cbdaa'#}
+  });
+
+  //测试提交，对接程序删除即可
+  $(".login_btn").click(function(){
+      window.location.href = '/renlian/'
+  });
+
+  $(".register_btn").click(function(){
+      $(location).attr("href","https://rlsb.cxlwt.cn/register.html");
+  });
+  
+  $(".update_btn").click(function(){
+      $(location).attr("href","https://rlsb.cxlwt.cn/update.html");
+  });
+});
+</script>
+</html>

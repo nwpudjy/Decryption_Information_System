@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>人脸检测</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+    .gif3{
+            position:absolute;/*声明绝对定位*/
+            left:0;/*在页面最左侧对齐*/
+            top:0;/*在页面最上方对齐*/
+            height:100vh;/*高度是相对屏幕高度的100%*/
+            width:100vw;/*宽度是相对屏幕宽度的100%*/
+            z-index:1;/*设置元素优先级为1级*/
+            display:none;/*设置元素隐藏*/
+            align-items: center;/*让子元素横向居中(声明flex后有效)*/
+            justify-content: center;/*让子元素垂直居中(声明flex后有效)*/
+            background-color:rgba(0,0,0,0.5);/*设置背景颜色为黑色，并给0.5透明度*/
+        }
+        .gif3>img/*设置gif下的img元素样式*/
+        {
+            height:40%;
+            width:30%;
+            border: 20px;
+            border-radius: 20px;
+        }
+    body{
+        background-image: linear-gradient(-90deg, #0140DF, #C20044);
+    }
+        #capture{
+            text-align: center;
+        }
+        #video{
+          background-image: linear-gradient(-90deg, #0140DF, #C20044);
+            margin-top: 10%;
+            text-align: center;
+        }
+        .auto{
+            position: relative;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .login {
+        font-size: 25px;
+    }
+
+    .login .login_box label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+        /* 这个属性的默认值是auto 默认是这个元素可以被点击 但是如果我们写了none 就是这个元素不能被点击 , 就好像它可见但是不能用 可望而不可即 */
+        /* 这个就是两者的区别 */
+        pointer-events: none;
+        /* 加个过渡 */
+        transition: all 0.5s;
+    }
+    /* :focus 选择器是当input获得焦点是触发的样式 + 是相邻兄弟选择器 去找与input相邻的兄弟label */
+    /* :valid 选择器是判断input框的内容是否合法,如果合法会执行下面的属性代码,不合法就不会执行,我们刚开始写布局的时候给input框写了required 我们删掉看对比 当没有required的话input框的值就会被认为一直合法,所以一直都是下方的样式 ,但是密码不会,密码框内的值为空,那么这句话局不合法,required不能为空 当我们给密码框写点东西的时候才会执行以下代码*/
+
+
+    .login button {
+        overflow: hidden;
+        position: relative;
+        padding: 10px 20px;
+        background: none;
+        color: #03e9f4;
+        /* 取消a表现原有的下划线 */
+
+        /* 同样加个过渡 */
+        transition: all 0.5s;
+    }
+    .login button:hover {
+        color: #fff;
+        border-radius: 5px;
+        background-color: #03e9f4;
+        box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+            0 0 100px #03e9f4;
+    }
+    .login button span {
+        position: absolute;
+    }
+    .login button span:first-child {
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        /* to right 就是往右边 下面的同理 */
+        background: linear-gradient(to right, transparent, #03e9f4);
+        /* 动画 名称 时长 linear是匀速运动 infinite是无限次运动 */
+        animation: move1 1s linear infinite;
+    }
+    .login button span:nth-child(2) {
+        right: 0;
+        top: -100%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(transparent, #03e9f4);
+        /* 这里多了个0.25s其实是延迟时间 */
+        animation: move2 1s linear 0.25s infinite;
+    }
+    .login button span:nth-child(3) {
+        right: -100%;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(to left, transparent, #03e9f4);
+        animation: move3 1s linear 0.5s infinite;
+    }
+    .login button span:last-child {
+        left: 0;
+        bottom: -100%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(#03e9f4, transparent);
+        animation: move4 1s linear 0.75s infinite;
+    }
+    /* 写一下动画 再坚持一下 视频马上就完了 */
+    @keyframes move1 {
+        0% {
+            left: -100%;
+        }
+        50%,
+        100% {
+            left: 100%;
+        }
+    }
+    @keyframes move2 {
+        0% {
+            top: -100%;
+        }
+        50%,
+        100% {
+            top: 100%;
+        }
+    }
+    @keyframes move3 {
+        0% {
+            right: -100%;
+        }
+        50%,
+        100% {
+            right: 100%;
+        }
+    }
+    @keyframes move4 {
+        0% {
+            bottom: -100%;
+        }
+        50%,
+        100% {
+            bottom: 100%;
+        }
+    }
+
+
+
+</style>
+<body>
+    <div class="gif3">
+        <img src="../static/img/34343.gif">
+        <p style="font-size: 30px;color: #bce8f1;;padding-top: 400px;float: left;position: absolute">正在识别ing...</p>
+    </div>
+    <div class="auto">
+            <video id="video" width="480" height="320" style="border-radius: 20px;border: 5px solid #03e9f4" autoplay></video>
+            <canvas id="canvas" width="480" height="320" style="display: none;"></canvas>
+            <img src="" id="img" width="0" height="0" style="margin-left: 20px;">
+            <br style="border-top: 150px">
+            <br>
+        <br style="border-top: 150px">
+            <br>
+            <div class="login">
+                <button style="border: 0;font-size: 18px" id="capture">识别
+                 <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+                </button>
+            </div>
+    </div>
+
+
+  <script>
+
+    $("#capture").click(function(){
+        $(".gif3").css("display","flex");
+    })
+    var file ,stream;
+    //访问用户媒体设备的兼容方法
+    function getUserMedia(constraints, success, error) {
+      if (navigator.mediaDevices.getUserMedia) {
+        //最新的标准API
+        navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+      } else if (navigator.webkitGetUserMedia) {
+        //webkit核心浏览器
+        navigator.webkitGetUserMedia(constraints,success, error)
+      } else if (navigator.mozGetUserMedia) {
+        //firfox浏览器
+        navigator.mozGetUserMedia(constraints, success, error);
+      } else if (navigator.getUserMedia) {
+        //旧版API
+        navigator.getUserMedia(constraints, success, error);
+      }
+    }
+
+    let video = document.getElementById('video');
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+
+    function success(stream) {
+      //兼容webkit核心浏览器
+      let CompatibleURL = window.URL || window.webkitURL;
+      //将视频流设置为video元素的源
+      console.log(stream);
+      stream = stream;
+      //video.src = CompatibleURL.createObjectURL(stream);
+      video.srcObject = stream;
+      video.play();
+    }
+
+    function error(error) {
+      console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
+    }
+
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+      //调用用户媒体设备, 访问摄像头
+      getUserMedia({video : {width: 480, height: 320}}, success, error);
+    } else {
+      alert('不支持访问用户媒体');
+    }
+        // base64转文件
+
+    document.getElementById('capture').addEventListener('click', function () {
+      context.drawImage(video, 0, 0, 480, 320);
+        // 获取图片base64链接
+        var image = canvas.toDataURL('image/png');
+        // 定义一个img
+        var img = document.getElementById("img");
+        //设置属性和src
+        //img.id = "imgBoxxx";
+        img.src = image;
+        //将图片添加到页面中
+        //document.body.appendChild(img);
+        function dataURLtoFile(dataurl, filename) {
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            file = new File([u8arr], filename, {type: mime});
+            return new File([u8arr], filename, {type: mime});
+        }
+        console.log(dataURLtoFile(image, 'aa.png'));
+
+        var formData = new FormData();
+        formData.append("file",file);
+        $.ajax({
+            type: "POST", // 数据提交类型
+            url: "/face/", // 发送地址
+            data: formData, //发送数据
+            async: true, // 是否异步
+            processData: false, //processData 默认为false，当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
+            contentType: false,
+            success:function(data){
+                $(".gif3").css("display","none");
+                if(data.code === 200){
+                    alert("检测通过，确认管理密钥！");
+                    window.location.href="/cybermanage/"
+                }else{
+                    alert("检测未通过，请重试！");
+                }
+            },
+            error:function(e){
+                self.$message.warning(`${e}`);
+                console.log("不成功"+e);
+            }
+        });
+        stream.getTracks()[0].stop();//结束关闭流
+    })
+
+    document.getElementById('sure').addEventListener('click', function () {
+        var formData = new FormData();
+        formData.append("file",file);
+        $.ajax({
+            type: "POST", // 数据提交类型
+            url: "/ltest/", // 发送地址
+            data: formData, //发送数据
+            async: true, // 是否异步
+            processData: false, //processData 默认为false，当设置为true的时候,jquery ajax 提交的时候不会序列化 data，而是直接使用data
+            contentType: false,
+            success:function(data){
+                if(data.code === 200){
+                    console.log(data.message);
+                    window.location.href="/login/"
+                }else{
+                    console.log(data.message);
+                }
+            },
+            error:function(e){
+                self.$message.warning(`${e}`);
+                console.log("不成功"+e);
+            }
+        });
+        stream.getTracks()[0].stop();//结束关闭流
+    })
+  </script>
+</body>
+</html>
+

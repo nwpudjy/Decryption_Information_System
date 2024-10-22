@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"  class="no-ie" style="overflow: hidden">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>加密信息系统</title>
+    <style>
+        body {
+            background-image: linear-gradient(-90deg, #0140DF, #C20044);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 100%;
+            background: none;
+            border-radius: 5px;
+            {#box-shadow: 0px 0px 10px #ccc;#}
+        }
+        h1 {
+            margin: 0;
+            padding: 20px;
+            background: none;
+            color: #03e9f4;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px 0 0 0;
+        }
+        td {
+            color: #03e9f4;
+            border-radius: 0 0 5px 5px;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .unread {
+            font-weight: bold;
+        }
+        .sender {
+            font-weight: bold;
+        }
+        .subject {
+            color: #03e9f4;
+            font-weight: bold;
+        }
+        .date {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>发件箱</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>状态</th>
+                    <th>收件人</th>
+                    <th>主题</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for i in form %}
+                <tr>
+                    <td class="unread">已发送</td>
+                    <td class="sender">{{ i.user2 }}</td>
+                    <td class="subject">{{ i.subject }}</td>
+                    <td class="date">{{ i.date }}  {{ i.time }}</td>
+                    <td ><a href="/chack/?id={{ i.id }}" style="text-decoration: none;color: #03e9f4;font-weight: 550;">查看</a></td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

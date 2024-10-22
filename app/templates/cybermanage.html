@@ -1,0 +1,334 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="no-ie" style="overflow:hidden;">
+
+    <head>
+    <meta charset="utf-8">
+    <title>密钥管理</title>
+    <link rel="stylesheet" href="style.css">
+    <STYLE>
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+        .container1 {
+            margin: 50px auto;
+            max-width: 100%;
+            background: none;
+            border-radius: 5px;
+            {#box-shadow: 0px 0px 10px #ccc;#}
+        }
+        h1 {
+          text-align: center;
+          margin-bottom: 20px;
+            color: #03e9f4;
+        }
+
+        .key-management {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          margin-top: 30px;
+        }
+
+        .key-management h2 {
+          margin-top: 20px;
+          margin-bottom: 10px;
+          font-size: 18px;
+        }
+
+        .key-management__form {
+          flex-basis: calc(100%);
+        }
+
+        .key-management__form form {
+          padding: 20px;
+          background-color: #f5f5f5;
+          border-radius: 8px;
+        }
+
+        .key-management__form .form-control {
+          margin-bottom: 10px;
+        }
+
+        .key-management__form label {
+          display: inline-block;
+          width: 160px;
+          font-weight: bold;
+          margin-right: 10px;
+        }
+
+        .key-management__form input[type=text],
+        .key-management__form input[type=number],
+        .key-management__form select {
+          padding: 8px;
+          width: 60%;
+          border-radius: 4px;
+          border: none;
+          font-size: 14px;
+        }
+
+        .key-management__form button {
+          margin-top: 10px;
+          padding: 8px 16px;
+          border: none;
+          border-radius: 4px;
+          background-color: #007bff;
+          color: #fff;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        .key-management__form button:hover {
+          background-color: #0062cc;
+        }
+
+
+
+        h2 {
+          font-size: 1.2rem;
+          margin-bottom: 10px;
+            color: #03e9f4;
+        }
+
+        .form-control {
+          display: flex;
+          margin-bottom: 10px;
+        }
+
+        .form-control label {
+          width: 120px;
+        }
+
+        .form-control input[type="text"],
+        .form-control input[type="number"],
+        .form-control select {
+          width: 100%;
+          padding: 8px;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          outline: none;
+          font-size: 1rem;
+        }
+
+        .form-control select {
+          appearance: none;
+        }
+
+        .form-control:hover input,
+        .form-control:focus input,
+        .form-control:hover select,
+        .form-control:focus select {
+          border-color: #007bff;
+        }
+
+        .btn {
+          padding: 10px 16px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .btn.btn-primary {
+          background-color: #007bff;
+          color: #fff;
+        }
+
+        .btn.btn-primary:hover {
+          background-color: #0062cc;
+        }
+
+        .btn.btn-danger {
+          background-color: #dc3545;
+          color: #fff;
+          margin-left: 10px;
+        }
+
+        .btn.btn-danger:hover {
+          background-color: #c82333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #007bff;
+
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px 0 0 0;
+        }
+        td {
+            color: #03e9f4;
+            border-radius: 0 0 5px 5px;
+        }
+        {#tr:hover {#}
+        {#    background-color: white;#}
+        {#}#}
+        .unread {
+            font-weight: bold;
+        }
+        .sender {
+            font-weight: bold;
+        }
+        .subject {
+            color: #03e9f4;
+            font-weight: bold;
+        }
+        .date {
+            font-style: italic;
+        }
+        .but{
+            {# padding: 10px 20px;#}
+            {#background-color: #007aff;#}
+            {#color: white;#}
+            {#border: none;#}
+            {#border-radius: 5px;#}
+            {#font-size: 18px;#}
+            {#cursor: pointer;#}
+            {#transition: background-color 0.2s ease;#}
+            text-decoration: none;
+            color: #03e9f4;
+        }
+     #contextMenu {
+        position: fixed;
+        width: auto;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        font-size: 14px;
+      }
+
+      #contextMenu ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #contextMenu ul li {
+        display: inline-block;
+        margin: 0;
+        padding: 5px 20px;
+        cursor: pointer;
+        color: #333;
+      }
+
+      #contextMenu ul li:hover {
+         background-color: #03e9f4;
+          border-radius: 5px;
+      }
+@media screen and (max-width: 768px) {
+  .key-management__form {
+    width: 100%;
+  }
+
+  .key-management__list {
+    width: 100%;
+  }
+
+  .key-management__detail {
+    width: 100%;
+  }
+}
+        </STYLE>
+    </head>
+    <body>
+        <div class="container">
+            <h1>密钥管理</h1>
+            <div class="key-management">
+                <div class="key-management__form">
+                    <form id="_form" method="post" action="/cybermanage/" novalidate>
+                        <h2>生成密钥</h2>
+                        <div class="form-control">
+                            <label for="keyName">密钥：</label>
+                            <input type="text" id="keyName" name="cyber">
+                        </div>
+                        <div class="form-control">
+                            <label for="keyName">密钥名称：</label>
+                            <input type="text" id="keyName" name="cybername">
+                        </div>
+                        <div class="form-control">
+                            <label for="keyLength">密钥长度：</label>
+                            <input type="number" id="keyLength" min="0" max="128" value="16" name="cyberlen">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('_form').submit();">保存密钥</button>
+                    </form>
+                </div>
+            </div>
+                <div class="container1" style="overflow-y:scroll;height: 35vh">
+                    <h2>密钥列表（右键复制秘钥）</h2>
+                    <table id="myTable">
+                        <thead>
+                            <tr>
+                                <th>密钥</th>
+                                <th>密钥名称</th>
+                                <th>密钥长度</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keyList" style="table-layout:fixed;">
+                        {% for i in form %}
+                            <tr>
+                                <td class="t_left" style="max-width: 100px; overflow: hidden;text-overflow:ellipsis">
+                                    {{ i.cyber }}
+
+                                </td>
+                                <TD>{{ i.cybername }}</TD>
+                                <TD>{{ i.length }}</TD>
+                                <TD>{{ i.date}}  {{ i.time }}</TD>
+                                <TD>
+                                    <a href="/delete/cyber/?id={{ i.id }}" style="text-decoration: none;color: #03e9f4;font-weight: 550;">删除</a>
+                                </TD>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                <div id="contextMenu" style="display:none">
+                  <ul>
+                    <li><a href="#" id="copyMenuItem" onclick="copyCell()">复制</a></li>
+                  </ul>
+                </div>
+                </div>
+
+        </div>
+
+        <script src="{% static 'js/jquary.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+        <script>
+          const myTable = document.getElementById("myTable");
+      const contextMenu = document.getElementById("contextMenu");
+      const copyMenuItem = document.getElementById("copyMenuItem");
+
+      let selectedCell;
+
+      myTable.addEventListener("contextmenu", e => {
+        e.preventDefault();
+        selectedCell = e.target;
+        contextMenu.style.display = "block";
+        contextMenu.style.left = `${e.pageX - 10}px`;
+        contextMenu.style.top = `${e.pageY - 10}px`;
+      });
+
+      document.addEventListener("click", e => {
+        contextMenu.style.display = "none";
+      });
+
+      function copyCell() {
+        const text = selectedCell.innerHTML;
+        navigator.clipboard.writeText(text).then(() => {
+          console.log(`已将"${text}"添加到剪贴板。`);
+        }, (err) => {
+          console.error(err);
+        });
+      }
+        </script>
+    </body>
+</html>

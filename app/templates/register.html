@@ -1,0 +1,64 @@
+{% extends 'test.html' %}
+{% block jj %}
+    <div class="login">
+    <h2>学生注册</h2>
+        <form id="UregForm" method="post" action="/register/" novalidate>
+            {% csrf_token %}
+            {% for item in form %}
+                <div class="login_box">
+                    {{ item }} <label for="{{ item.id_for_label }}">{{ item.label }}</label>
+                    <span style="color: red">{{ item.errors.0 }}</span>
+                </div>
+            {% endfor %}
+
+            <a id="UbtnSubmit" type="button" class="btn" onclick="document.getElementById('UregForm')">
+                注 册
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+            <a class="btn" type="button"  onclick="location='/login/user/'" >
+                返 回
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </form>
+    </div>
+{% endblock %}
+{% block kk %}
+    <script type="text/javascript">
+
+    $(function (){
+        bindClicksubmit();
+    });
+
+
+    //点击提交
+    function bindClicksubmit(){
+        $('#UbtnSubmit').click(function (){
+            $('#error-msg').empty();
+            //收集表单所有数据 数据ajsx发送到后台
+            $.ajax({
+                url: "/register/",
+                type:"POST",
+                data:$('#UregForm').serialize(),
+                dataType:"JSON",//将服务器返回的数据反序列化为字典
+                success: function (res){
+                    if(res.status){
+                        location.href = res.data;
+                    }else{
+                        //错误信息
+                        $.each(res.error, function (key, value){
+                            $("#id_"+key).next().next().text(value[0]);
+                        })
+                    }
+                }
+            })
+        })
+    }
+
+</script>
+{% endblock %}

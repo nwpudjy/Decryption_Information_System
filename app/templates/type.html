@@ -1,0 +1,387 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="no-ie" style="overflow:hidden;">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>加密信息系统</title>
+      <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <style>
+    body{
+        overflow-y: hidden;
+    }
+    .intext{
+        margin: 0;
+        -webkit-appearance: none;
+        background-color: #fff;
+        border: 3px solid #abadb3;
+        border-radius: 0;
+        resize: vertical;
+        overflow: auto;
+        font-family: Monaco,'Lucida Console',monospace,Consolas,Courier,'Microsoft YaHei';
+        font-size: 16px;
+        line-height: 1.5;
+        display: block;
+        width: 100%;
+        height: 261px;
+        padding: 3px 5px;
+        box-sizing: border-box;
+    }
+    .inp {
+          border: none;
+          outline: none;
+          border-radius: 15px;
+          padding: 1em;
+          background-color: #ccc;
+          box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+          transition: 300ms ease-in-out;
+        }
+
+        .inp:focus {
+          background-color: white;
+          transform: scale(1);
+          box-shadow: 13px 13px 100px #969696,
+                     -13px -13px 100px #ffffff;
+        }
+
+    body {
+        /* 弹性布局 让页面元素垂直+水平居中 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* 让页面始终占浏览器可视区域总高度 */
+        height: 100vh;
+        /* 背景渐变色 */
+        background-image: linear-gradient(-90deg, #0140DF, #C20044);
+        {#background-image: radial-gradient(circle, #b1a9ad, #9f989d, #8c888e, #7a787e, #68686f, #595b61, #4b4e54, #3e4246, #313537, #242829, #191b1b, #0c0d0d);#}
+    }
+    .login {
+        font-size: 25px;
+    }
+
+    .login .login_box label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+        /* 这个属性的默认值是auto 默认是这个元素可以被点击 但是如果我们写了none 就是这个元素不能被点击 , 就好像它可见但是不能用 可望而不可即 */
+        /* 这个就是两者的区别 */
+        pointer-events: none;
+        /* 加个过渡 */
+        transition: all 0.5s;
+    }
+    /* :focus 选择器是当input获得焦点是触发的样式 + 是相邻兄弟选择器 去找与input相邻的兄弟label */
+    /* :valid 选择器是判断input框的内容是否合法,如果合法会执行下面的属性代码,不合法就不会执行,我们刚开始写布局的时候给input框写了required 我们删掉看对比 当没有required的话input框的值就会被认为一直合法,所以一直都是下方的样式 ,但是密码不会,密码框内的值为空,那么这句话局不合法,required不能为空 当我们给密码框写点东西的时候才会执行以下代码*/
+
+
+    .login button {
+        overflow: hidden;
+        position: relative;
+        padding: 10px 20px;
+        background: none;
+        color: #03e9f4;
+        /* 取消a表现原有的下划线 */
+
+        /* 同样加个过渡 */
+        transition: all 0.5s;
+    }
+    .login button:hover {
+        color: #fff;
+        border-radius: 5px;
+        background-color: #03e9f4;
+        box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+            0 0 100px #03e9f4;
+    }
+    .login button span {
+        position: absolute;
+    }
+    .login button span:first-child {
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        /* to right 就是往右边 下面的同理 */
+        background: linear-gradient(to right, transparent, #03e9f4);
+        /* 动画 名称 时长 linear是匀速运动 infinite是无限次运动 */
+        animation: move1 1s linear infinite;
+    }
+    .login button span:nth-child(2) {
+        right: 0;
+        top: -100%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(transparent, #03e9f4);
+        /* 这里多了个0.25s其实是延迟时间 */
+        animation: move2 1s linear 0.25s infinite;
+    }
+    .login button span:nth-child(3) {
+        right: -100%;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(to left, transparent, #03e9f4);
+        animation: move3 1s linear 0.5s infinite;
+    }
+    .login button span:last-child {
+        left: 0;
+        bottom: -100%;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(#03e9f4, transparent);
+        animation: move4 1s linear 0.75s infinite;
+    }
+    /* 写一下动画 再坚持一下 视频马上就完了 */
+    @keyframes move1 {
+        0% {
+            left: -100%;
+        }
+        50%,
+        100% {
+            left: 100%;
+        }
+    }
+    @keyframes move2 {
+        0% {
+            top: -100%;
+        }
+        50%,
+        100% {
+            top: 100%;
+        }
+    }
+    @keyframes move3 {
+        0% {
+            right: -100%;
+        }
+        50%,
+        100% {
+            right: 100%;
+        }
+    }
+    @keyframes move4 {
+        0% {
+            bottom: -100%;
+        }
+        50%,
+        100% {
+            bottom: 100%;
+        }
+    }
+    .gif1{
+            position:absolute;/*声明绝对定位*/
+            left:0;/*在页面最左侧对齐*/
+            top:0;/*在页面最上方对齐*/
+            height:100vh;/*高度是相对屏幕高度的100%*/
+            width:100vw;/*宽度是相对屏幕宽度的100%*/
+            z-index:1;/*设置元素优先级为1级*/
+            display:none;/*设置元素隐藏*/
+            align-items: center;/*让子元素横向居中(声明flex后有效)*/
+            justify-content: center;/*让子元素垂直居中(声明flex后有效)*/
+            background-color:rgba(0,0,0,0.5);/*设置背景颜色为黑色，并给0.5透明度*/
+        }
+        .gif1>img/*设置gif下的img元素样式*/
+        {
+            height:40%;
+            width:30%;
+            border: 20px;
+            border-radius: 20px;
+        }
+        .gif2{
+            position:absolute;/*声明绝对定位*/
+            left:0;/*在页面最左侧对齐*/
+            top:0;/*在页面最上方对齐*/
+            height:100vh;/*高度是相对屏幕高度的100%*/
+            width:100vw;/*宽度是相对屏幕宽度的100%*/
+            z-index:1;/*设置元素优先级为1级*/
+            display:none;/*设置元素隐藏*/
+            align-items: center;/*让子元素横向居中(声明flex后有效)*/
+            justify-content: center;/*让子元素垂直居中(声明flex后有效)*/
+            background-color:rgba(0,0,0,0.5);/*设置背景颜色为黑色，并给0.5透明度*/
+        }
+        .gif2>img/*设置gif下的img元素样式*/
+        {
+            height:40%;
+            width:30%;
+            border: 20px;
+            border-radius: 20px;
+        }
+        .gif3{
+            position:absolute;/*声明绝对定位*/
+            left:0;/*在页面最左侧对齐*/
+            top:0;/*在页面最上方对齐*/
+            height:100vh;/*高度是相对屏幕高度的100%*/
+            width:100vw;/*宽度是相对屏幕宽度的100%*/
+            z-index:1;/*设置元素优先级为1级*/
+            display:none;/*设置元素隐藏*/
+            align-items: center;/*让子元素横向居中(声明flex后有效)*/
+            justify-content: center;/*让子元素垂直居中(声明flex后有效)*/
+            background-color:rgba(0,0,0,0.5);/*设置背景颜色为黑色，并给0.5透明度*/
+        }
+        .gif3>img/*设置gif下的img元素样式*/
+        {
+            height:40%;
+            width:30%;
+            border: 20px;
+            border-radius: 20px;
+        }
+    {% block sty %}
+    {% endblock %}
+    </style>
+</head>
+<body style="overflow-y: hidden">
+
+{% block Alldiv1 %}
+
+{% endblock %}
+
+    <form method="post">
+        <div style="margin:0 0">
+        <textarea class="intext inp" rows="200" cols="780" name="text" id="code" spellcheck="false" placeholder="请输入要加密的内容">{{ aa }}</textarea>
+    </div>
+
+    <p style="font-size: 25px;color: #03e9f4">加密算法：{{ encryption }}</p>
+    <div class="gif2">
+        <img src="../static/img/34343.gif">
+        <p style="font-size: 30px;color: #bce8f1;padding-top: 400px;float: left;position: absolute">正在加密...</p>
+    </div>
+    <div class="gif3">
+        <img src="../static/img/34343.gif">
+        <p style="font-size: 30px;color: #bce8f1;padding-top: 400px;float: left;position: absolute">正在解密...</p>
+    </div>
+    <div class="login">
+        <button class="btn" onclick="u1()" type="submit" name="dec" value="1">加密
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        {% if encryption != 'SM3' %}
+        <button class="btn" onclick="u2()" type="submit" name="dec" value="2">解密
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        {% endif %}
+
+    </div>
+
+
+       {% block key %}
+
+        {% endblock %}
+
+
+    </form>
+    <div class="login" style="width: 100%;">
+        <button class="btn" onclick="window.location.href = '/des/'">
+            DES
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        <button class="btn" type="submit" onclick="window.location.href = '/des2/'">2DES
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        <button class="btn" type="submit" onclick="window.location.href = '/des3/'">3DES
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        <button class="btn" type="submit" name="type" onclick="window.location.href = '/aes/'">AES
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        <button class="btn" type="submit" name="type" onclick="window.location.href = '/sm4/'">SM4
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        <button class="btn" type="submit" name="type" onclick="window.location.href = '/rc4/'">RC4
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        <button class="btn" type="submit" name="type" onclick="window.location.href = '/sm3/'">SM3
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+        </button>
+        <button class="btn" type="submit" name="type" onclick=u()>RSA
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+             <script>$(".gif1").css("display","flex");</script>
+        </button>
+        <br>
+        <div class="gif1">
+              <img src="../static/img/34343.gif">
+              <p style="font-size: 30px;color: #bce8f1;padding-top: 400px;float: left;position: absolute">正在生成秘钥...</p>
+          </div>
+        <button class="btn" type="submit" name="type" onclick=u3()>Elgamal
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+             <script>$(".gif1").css("display","flex");</script>
+        </button>
+        <br>
+
+{#        <button class="btn" type="submit" onclick="window.location.href = '/fileencrypt/'">文件加密#}
+{#                <span></span>#}
+{#				<span></span>#}
+{#				<span></span>#}
+{#				<span></span>#}
+{#        </button>#}
+{#        <button class="btn" type="submit" onclick="window.location.href = '/login/user/'">加密传输#}
+{#                <span></span>#}
+{#				<span></span>#}
+{#				<span></span>#}
+{#				<span></span>#}
+{#        </button>#}
+    </div>
+    {% block Alldiv2 %}
+    {% endblock %}
+
+
+
+
+
+
+<script src="{% static 'js/jquary.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+
+{% block kk %}
+{% endblock %}
+<script>
+
+    function u(){
+        $(".gif1").css("display","flex");
+        window.location.href = '/rsa/';
+    }
+    function u1(){
+        $(".gif2").css("display","flex");
+    }
+    function u2(){
+        $(".gif3").css("display","flex");
+    }
+    function u3(){
+        $(".gif1").css("display","flex");
+        window.location.href = '/elgamal/';
+    }
+</script>
+
+</body>
+</html>

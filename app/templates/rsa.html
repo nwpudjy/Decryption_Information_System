@@ -1,0 +1,23 @@
+{% extends 'type.html' %}
+
+{% block Alldiv1 %}
+<div style="text-align: center;line-height: 55.5px">
+{% endblock %}
+
+{% block key %}
+    <p style="color: #03e9f4;: 0;">公钥e：<input class="inp" style="height: 40px;color:black" type="text" name="e" value="{{ e }}"> </p>
+    <p style="color: #03e9f4;: 0;">公钥n：<input class="inp" style="height: 40px;color:black" type="text" name="n" value="{{ n }}"></p>
+    <p style="color: #03e9f4;: 0;">私钥：<input class="inp" style="height: 40px;color:black" type="text" name="d" value="{{ d }}"></p>
+{% endblock %}
+{% block Alldiv2 %}
+</div>
+{% endblock %}
+
+{% block kk %}
+    <script>
+        $(".gif1").css("display","none");
+
+    </script>
+{% endblock %}
+
+

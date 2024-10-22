@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="no-ie" style="overflow:hidden;">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>加密信息系统</title>
+    <style>
+        body {
+            background-image: linear-gradient(-90deg, #0140DF, #C20044);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 100%;
+            background: none;
+            border-radius: 5px;
+            {#box-shadow: 0px 0px 10px #ccc;#}
+        }
+        h1 {
+            margin: 0;
+            padding: 20px;
+            background: none;
+            color: #03e9f4;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #007bff;
+
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px 0 0 0;
+        }
+        td {
+            color: #03e9f4;
+            border-radius: 0 0 5px 5px;
+        }
+        tr:hover {
+            background-color: white;
+        }
+        .unread {
+            font-weight: bold;
+        }
+        .sender {
+            font-weight: bold;
+        }
+        .subject {
+            color: #03e9f4;
+            font-weight: bold;
+        }
+        .date {
+            font-style: italic;
+        }
+        .but{
+            {# padding: 10px 20px;#}
+            {#background-color: #007aff;#}
+            {#color: white;#}
+            {#border: none;#}
+            {#border-radius: 5px;#}
+            {#font-size: 18px;#}
+            {#cursor: pointer;#}
+            {#transition: background-color 0.2s ease;#}
+            text-decoration: none;
+            color: #03e9f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>收件箱</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>状态</th>
+                    <th>发件人</th>
+                    <th>主题</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in form %}
+                <tr onclick="document.submit();">
+                {% if i.view == '0' %}
+                    <td class="unread">未读</td>
+                    {% else %}
+                    <td class="unread">已读</td>
+                    {% endif %}
+                    <td class="sender">{{ i.user1 }}</td>
+                    <td class="subject">{{ i.subject }}</td>
+                    <td class="date">{{ i.date }}  {{ i.time }}</td>
+                    <td ><a class="but" href="/chack/?id={{ i.id }}">查看</a></td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'test.html' %}
+{% block jj %}
+    <div class="login">
+    <h2>登      录</h2>
+        <form id="_form" method="post" action="/login/user/?log={{ log }}" novalidate>
+            {% csrf_token %}
+            <div class="login_box">
+                {{ form.user }}<label>账号</label>
+                <span style="color: red">{{ form.user.errors.0 }}</span>
+            </div>
+            <div class="login_box">
+                {{ form.password }}<label>密码</label>
+                <span style="color: red">{{ form.password.errors.0 }}</span>
+            </div>
+
+            <a class="btn" onclick="document.getElementById('_form').submit();">
+                登 录
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+            </a>
+            <span style="color: red">{{ error }}</span>
+
+            <div style="float:right">
+                <a href="/register/" class="btn"\>
+                注 册
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+            </a>
+            </div>
+
+
+        </form>
+    </div>
+{% endblock %}

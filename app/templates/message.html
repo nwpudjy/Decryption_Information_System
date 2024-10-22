@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="no-ie" style="overflow:hidden;">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>加密传输</title>
+    <link rel="stylesheet" href="{% static 'css/styless.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+        .main_left{
+            width: 12%;
+            float: left;
+            cursor: pointer;
+        }
+        .main_right{
+            float: left;
+            cursor: pointer;
+        }
+        .right{
+            float: right;
+            height: 100vh;
+            width: 88%;
+            overflow: auto;
+        }
+
+        .newskinbody{
+            font-family: "lucida Grande",Verdana,"Microsoft YaHei";
+            -webkit-font-smoothing: subpixel-antialiased;
+            font-size: 12px;
+            background: url(https://rescdn.qqmail.com/zh_CN/htmledition/images/skin_26/navbar_bottom1e9c5d.gif) no-repeat scroll -11px bottom;
+            position: absolute;
+            top: 77px;
+            width: 179px;
+            left: 8px;
+            bottom: 0;
+            border-left: 0 none;
+            height: auto;
+        }
+
+    </style>
+</head>
+<body style="background-image: linear-gradient(-90deg, #0140DF, #C20044);overflow-y: hidden">
+
+<div class="main_left" style="overflow-y:scroll">
+    <div class="sidebar">
+        <section class="home-section">
+        <div class="home-content">
+          <i class='bx bx-menu' ></i>
+        </div>
+      </section>
+
+
+    <ul class="nav-links">
+      <li>
+        <a data-src="/des/">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">加解密</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" data-src="/des/">加解密</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-src="/fileencrypt/">
+          <i class='bx bx-line-chart' ></i>
+          <span class="link_name">文件加密</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" data-src="/fileencrypt/">文件加密</a></li>
+        </ul>
+      </li>
+
+        <li>
+        <a data-src="/exchange/?log=1">
+          <i class='bx bx-history'></i>
+          <span class="link_name">秘钥交换</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" data-src="/exchange/?log=1">秘钥交换</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-src="/import/?log=2">
+          <i class='bx bx-compass' ></i>
+          <span class="link_name">加密传输</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" data-src="/import/?log=2">加密传输</a></li>
+        </ul>
+      </li>
+
+       <li>
+        <a data-src="/send/?log=3">
+          <i class='bx bx-cog' ></i>
+          <span class="link_name">发件箱</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" data-src="/send/?log=3">收件箱</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-src="/receive/?log=4">
+          <i class='bx bx-cog' ></i>
+          <span class="link_name">收件箱</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" data-src="/receive/?log=4">收件箱</a></li>
+        </ul>
+      </li>
+
+
+        <li>
+        <a data-src="/face/?log=4">
+          <i class='bx bx-cog' ></i>
+          <span class="link_name">密钥管理</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" data-src="/face/?log=4">密钥管理</a></li>
+        </ul>
+      </li>
+
+        <div style="padding-top: 60px;padding-left: 15px;font-size: 18px;color: white">
+          <span class="link_name">访问次数: {{ times }}</span>
+      </div>
+        <div style="padding-top: 30px;padding-left: 15px;font-size: 18px;color: white">
+          <span class="link_name">用户总数: {{ usernum }}</span>
+      </div>
+
+
+
+        <li>
+            <div class="profile-details">
+                <div>
+                    <div class="profile_name">{{ name }}</div>
+                    <div class="job">账号: {{ user }}</div>
+                </div>
+                <a data-src="/logout/">
+                    <i class='bx bx-log-out' ></i>
+                </a>
+            </div>
+        </li>
+
+
+</ul>
+  </div>
+</div>
+
+<div class="right">
+    <iframe frameborder="0" scrolling="yes" style="width: 100%;height: 100%" src="/des/"></iframe>
+</div>
+
+
+
+<script src="{% static 'js/jquary.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript">
+
+        $(function(){
+            $(".main_left a").on("click",function(){
+                var address =$(this).attr("data-src");
+                $("iframe").attr("src",address);
+            });
+        });
+        $(function(){
+            $(".main_right a").on("click",function(){
+                var address =$(this).attr("data-src");
+                $("iframe").attr("src",address);
+            });
+        });
+
+    let arrow = document.querySelectorAll(".arrow");
+      for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e)=>{
+       let arrowParent = e.target.parentElement.parentElement;
+       arrowParent.classList.toggle("showMenu");
+        });
+      }
+
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".bx-menu");
+      console.log(sidebarBtn);
+      sidebarBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("close");
+      });
+       document.getElementById("file").onchange = function() {
+            document.querySelector(".attachment span").textContent = this.value.split("\\").pop();
+        }
+
+    </script>
+</body>
+</html>

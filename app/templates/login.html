@@ -1,0 +1,46 @@
+{% extends 'type.html' %}
+{% block jj %}
+    <div class="login">
+    <h2>老师登录</h2>
+        <form id="_form" method="post" action="/login/" novalidate>
+            {% csrf_token %}
+            <div class="login_box">
+                {{ form.user }}<label>账号</label>
+                <span style="color: red">{{ form.user.errors.0 }}</span>
+            </div>
+            <div class="login_box">
+                {{ form.password }}<label>密码</label>
+                <span style="color: red">{{ form.password.errors.0 }}</span>
+            </div>
+            <div class="login_box">
+                <div class="row">
+                    <div class="col-xs-7">
+                        {{ form.code }}<label style="padding-left: 15px">{{ form.code.label }}</label>
+                        <span style="color: red">{{ form.code.errors.0 }}</span>
+                    </div>
+                    <div class="col-xs-5">
+                        <img id="image_code" src="/image/code/" style="width: 116px">
+                    </div>
+                </div>
+            </div>
+            <a type="submit" class="btn" onclick="document.getElementById('_form').submit();">
+                登 录
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+            </a>
+            <span style="color: red">{{ error }}</span>
+            <a href="/register/" class="btn"\>
+                注 册
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+            </a>
+            <a href="/login/sms/" type="submit" style="float: right" class="dd">手机号登录</a>
+        </form>
+    </div>
+
+{% endblock %}
+

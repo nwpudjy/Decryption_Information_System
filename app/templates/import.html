@@ -1,0 +1,368 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"  class="no-ie" style="overflow: hidden;overflow-x: hidden;overflow-y: hidden">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>加密传输</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Open Sans", sans-serif;
+            color: #333;
+            overflow: hidden;
+            background-color: #f2f2f2;
+        }
+        .login {
+        font-size: 25px;
+    }
+
+        .login .login_box label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #fff;
+            /* 这个属性的默认值是auto 默认是这个元素可以被点击 但是如果我们写了none 就是这个元素不能被点击 , 就好像它可见但是不能用 可望而不可即 */
+            /* 这个就是两者的区别 */
+            pointer-events: none;
+            /* 加个过渡 */
+            transition: all 0.5s;
+        }
+        /* :focus 选择器是当input获得焦点是触发的样式 + 是相邻兄弟选择器 去找与input相邻的兄弟label */
+        /* :valid 选择器是判断input框的内容是否合法,如果合法会执行下面的属性代码,不合法就不会执行,我们刚开始写布局的时候给input框写了required 我们删掉看对比 当没有required的话input框的值就会被认为一直合法,所以一直都是下方的样式 ,但是密码不会,密码框内的值为空,那么这句话局不合法,required不能为空 当我们给密码框写点东西的时候才会执行以下代码*/
+
+
+        .login button {
+            overflow: hidden;
+            position: relative;
+            padding: 10px 20px;
+            background: none;
+            color: #03e9f4;
+            /* 取消a表现原有的下划线 */
+
+            /* 同样加个过渡 */
+            transition: all 0.5s;
+        }
+        .login button:hover {
+            color: #fff;
+            border-radius: 5px;
+            background-color: #03e9f4;
+            box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+                0 0 100px #03e9f4;
+        }
+        .login button span {
+            position: absolute;
+        }
+        .login button span:first-child {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            /* to right 就是往右边 下面的同理 */
+            background: linear-gradient(to right, transparent, #03e9f4);
+            /* 动画 名称 时长 linear是匀速运动 infinite是无限次运动 */
+            animation: move1 1s linear infinite;
+        }
+        .login button span:nth-child(2) {
+            right: 0;
+            top: -100%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(transparent, #03e9f4);
+            /* 这里多了个0.25s其实是延迟时间 */
+            animation: move2 1s linear 0.25s infinite;
+        }
+        .login button span:nth-child(3) {
+            right: -100%;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to left, transparent, #03e9f4);
+            animation: move3 1s linear 0.5s infinite;
+        }
+        .login button span:last-child {
+            left: 0;
+            bottom: -100%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(#03e9f4, transparent);
+            animation: move4 1s linear 0.75s infinite;
+        }
+        .login input {
+            overflow: hidden;
+            position: relative;
+            padding: 10px 20px;
+            background: none;
+            color: #03e9f4;
+            /* 取消a表现原有的下划线 */
+
+            /* 同样加个过渡 */
+            transition: all 0.5s;
+        }
+        .login input:hover {
+            color: #fff;
+            border-radius: 5px;
+            background-color: #03e9f4;
+            box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+                0 0 100px #03e9f4;
+        }
+        .login input span {
+            position: absolute;
+        }
+        .login input span:first-child {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            /* to right 就是往右边 下面的同理 */
+            background: linear-gradient(to right, transparent, #03e9f4);
+            /* 动画 名称 时长 linear是匀速运动 infinite是无限次运动 */
+            animation: move1 1s linear infinite;
+        }
+        .login input span:nth-child(2) {
+            right: 0;
+            top: -100%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(transparent, #03e9f4);
+            /* 这里多了个0.25s其实是延迟时间 */
+            animation: move2 1s linear 0.25s infinite;
+        }
+        .login input span:nth-child(3) {
+            right: -100%;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to left, transparent, #03e9f4);
+            animation: move3 1s linear 0.5s infinite;
+        }
+        .login input span:last-child {
+            left: 0;
+            bottom: -100%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(#03e9f4, transparent);
+            animation: move4 1s linear 0.75s infinite;
+        }
+        /* 写一下动画 再坚持一下 视频马上就完了 */
+        @keyframes move1 {
+            0% {
+                left: -100%;
+            }
+            50%,
+            100% {
+                left: 100%;
+            }
+        }
+        @keyframes move2 {
+            0% {
+                top: -100%;
+            }
+            50%,
+            100% {
+                top: 100%;
+            }
+        }
+        @keyframes move3 {
+            0% {
+                right: -100%;
+            }
+            50%,
+            100% {
+                right: 100%;
+            }
+        }
+        @keyframes move4 {
+            0% {
+                bottom: -100%;
+            }
+            50%,
+            100% {
+                bottom: 100%;
+            }
+        }
+        .intext{
+        margin: 0;
+        -webkit-appearance: none;
+        background-color: #fff;
+        border: 3px solid #abadb3;
+        border-radius: 0;
+        resize: vertical;
+        overflow: auto;
+        font-family: Monaco,'Lucida Console',monospace,Consolas,Courier,'Microsoft YaHei';
+        font-size: 16px;
+        line-height: 1.5;
+        display: block;
+        width: 100%;
+        height: 300px;
+        padding: 3px 5px;
+        box-sizing: border-box;
+
+    }
+    .inp {
+          border: none;
+          outline: none;
+          border-radius: 15px;
+          padding: 1em;
+          background-color: #ccc;
+          box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+          transition: 300ms ease-in-out;
+        }
+
+        .inp:focus {
+          background-color: white;
+          transform: scale(1);
+          box-shadow: 13px 13px 100px #969696,
+                     -13px -13px 100px #ffffff;
+        }
+        .container {
+            max-width: 95%;
+            height: 100vh;
+            background-color: none;
+            margin: auto auto;
+
+
+        }
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            color: #03e9f4;
+            margin-bottom: 10px;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+
+        }
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #03e9f4;
+            font-weight: bold;
+        }
+        form input[type="email"], form input[type="text"], form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            font-family: inherit;
+            color: inherit;
+            resize: none;
+        }
+        form input[type="email"]:focus, form input[type="text"]:focus, form textarea:focus {
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        form .attachment {
+            display: flex;
+            align-items: center;
+
+        }
+        form .attachment label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: none;
+            color: #03e9f4;
+            border-radius: 5px;
+            border: 2px solid #03e9f4;;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        form .attachment label:hover {
+            background-color: #03e9f4;
+            color: white;
+        }
+        form .attachment input[type="file"] {
+            display: none;
+        }
+        form .attachment span {
+            margin-left: 10px;
+            font-size: 16px;
+            color: #03e9f4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        form input[type="submit"]:hover {
+            background-color: none;
+        }
+        @media (max-width: 768px) {
+            form {
+                flex-direction: column;
+            }
+            form label {
+                font-size: 16px;
+            }
+            form input[type="email"], form input[type="text"], form textarea {
+                margin-bottom: 10px;
+            }
+            form .attachment {
+                margin-bottom: 10px;
+            }
+
+
+        }
+    </style>
+</head>
+<body style="background-image: linear-gradient(-90deg, #0140DF, #C20044);overflow-y: hidden">
+
+    <div class="container">
+        <h1>加密传输</h1>
+        <form id="_form" method="post" action="/import/" novalidate>
+            {% csrf_token %}
+            <label for="to">收信人</label> <span style="color: red;float: left;font-weight: 400;font-size: 20px">{{ form.user.errors.0 }}</span>
+            {{ form.user }}
+{#            <input  type="email" id="to" name="recipient" placeholder="请输入收信人">#}
+            <label for="subject">主题</label>
+            <input class="inp" type="text" id="subject" name="subject" placeholder="请输入邮件主题">
+            <label for="message">内容</label>
+            <textarea class="inp intext" id="message" name="message"  rows="10" placeholder="请输入邮件内容"></textarea>
+            <script src="{% static 'js/jquary.min.js' %}"></script>
+            <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+            <script>
+                $('#message').text({{ message }})
+                $('#subject').val({{ subject }})
+            </script>
+            <br>
+            <br>
+            <div class="login attachment " style="padding-top: 20px">
+                <label for="file"><i class="fa fa-paperclip"></i> 附件</label>
+                <input class="intext inp" type="file" id="file" name="file" accept="image/*,application/pdf">
+                <span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+                <span>未选择文件</span>
+            </div>
+            <div class="login" style="padding-top: 20px;border: 0">
+                <button class="btn" style="border: 0;font-size: 18px" type="submit" onclick="document.getElementById('_form').submit();">
+                    发送
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,391 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"  class="no-ie" style="overflow: hidden;overflow-x: hidden;overflow-y: hidden">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>加密传输</title>
+    <style>
+
+
+        .container {
+            max-width: 95%;
+            height: 100vh;
+            background-color: none;
+            margin: auto auto;
+
+
+        }
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            color: #03e9f4;
+            margin-bottom: 10px;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+
+        }
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #03e9f4;
+            font-weight: bold;
+        }
+        form input[type="email"], form input[type="text"], form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            font-family: inherit;
+            color: inherit;
+            resize: none;
+        }
+        form input[type="email"]:focus, form input[type="text"]:focus, form textarea:focus {
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        form .attachment {
+            display: flex;
+            align-items: center;
+
+        }
+        form .attachment label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007aff;
+            color: white;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        form .attachment label:hover {
+            background-color: #0066cc;
+        }
+        form .attachment input[type="file"] {
+            display: none;
+        }
+        form .attachment span {
+            margin-left: 10px;
+            font-size: 16px;
+            color: #03e9f4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        form input[type="submit"]:hover {
+            background-color: #0066cc;
+        }
+        @media (max-width: 768px) {
+            form {
+                flex-direction: column;
+            }
+            form label {
+                font-size: 16px;
+            }
+            form input[type="email"], form input[type="text"], form textarea {
+                margin-bottom: 10px;
+            }
+            form .attachment {
+                margin-bottom: 10px;
+            }
+        }
+
+        .box1{
+            width: 40%;
+            height: 80vh;
+            margin: 50px 50px;
+            border: 5px #03e9f4 solid;
+            border-radius: 20px;
+            background-image: linear-gradient(-90deg, #0140DF, #C20044);
+        }
+        .box2{
+            width: 45%;
+            height: 35vh;
+            margin: 50px 0 0 50%;
+            border: 5px #03e9f4 solid;
+            border-radius: 20px;
+            background-image: linear-gradient(-90deg, #0140DF, #C20044);
+        }
+        .box3{
+            width: 45%;
+            height: 35vh;
+            margin: 52vh 0 0 50%;
+            border: 5px #03e9f4 solid;
+            border-radius: 20px;
+            background-image: linear-gradient(-90deg, #0140DF, #C20044);
+        }
+        h2 {
+            margin: 0;
+            padding: 20px;
+            background: none;
+            color: #03e9f4;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px 0 0 0;
+        }
+        td {
+            color: #03e9f4;
+            border-radius: 0 0 5px 5px;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .unread {
+            font-weight: bold;
+        }
+        .sender {
+            font-weight: bold;
+        }
+        .subject {
+            color: #03e9f4;
+            font-weight: bold;
+        }
+        .date {
+            font-style: italic;
+        }
+         #contextMenu {
+        position: fixed;
+        width: auto;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        font-size: 14px;
+      }
+
+      #contextMenu ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #contextMenu ul li {
+        display: inline-block;
+        margin: 0;
+        padding: 5px 20px;
+        cursor: pointer;
+        color: #333;
+      }
+
+      #contextMenu ul li:hover {
+        background-color: #03e9f4;
+          border-radius: 5px;
+      }
+@media screen and (max-width: 768px) {
+  .key-management__form {
+    width: 100%;
+  }
+
+  .key-management__list {
+    width: 100%;
+  }
+
+  .key-management__detail {
+    width: 100%;
+  }
+}
+    </style>
+</head>
+<body style="background-image: linear-gradient(-90deg, #0140DF, #C20044)">
+
+    <div style="position: relative">
+        <div class="box1" style="position: absolute">
+
+        <form id="_form" method="post" action="/exchange/" novalidate>
+            <div style="width: 80%;padding-left: 40px;padding-top: 80px">
+                <label for="b">交换人账号:</label>
+                {{ form.user }}
+{#                <input type="text" class="inp"  id="b" name="b">#}
+            </div>
+            <div style="width: 80%;padding-left: 40px">
+                <label for="p">p:</label>
+                {{ form.p }}
+{#                <input type="text" class="inp" id="p" name="p">#}
+            </div>
+
+            <div style="width: 80%;padding-left: 40px">
+                <label for="g">g:</label>
+                {{ form.g }}
+{#                <input type="text" class="inp" id="g" name="g">#}
+            </div>
+            <div style="width: 80%;padding-left: 40px">
+                <label for="a">私钥:</label>
+                {{ form.a }}
+{#                <input type="text" class="inp" id="a" name="a">#}
+            </div>
+
+            <div style="padding-top: 20px;width: 50%;padding-left: 40%">
+                <input type="submit" onclick="document.getElementById('_form').submit();" value="发送">
+            </div>
+
+        </form>
+
+</div>
+
+        <div class="box2" style="position: absolute;overflow-y:scroll;-webkit-scroll-snap-type: 0">
+            <div class="container">
+        <h2>申请(我)</h2>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>状态</th>
+                    <th>请求人</th>
+                    <th> 《p,g》  </th>
+                    <th>私钥a</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for i in form1 %}
+                <tr>
+                    {% if i.view == '0' %}
+                    <td class="sender">请求中</td>
+                    {% elif i.view == '1' %}
+                    <td class="sender" style="color:red;">已拒绝</td>
+                    {% else %}
+                    <td class="sender">已同意</td>
+                    {% endif %}
+                    <td class="sender">{{ i.user2 }}</td>
+                    <td class="subject" style="max-width: 100px; overflow: hidden;text-overflow:ellipsis">{{ i.p }},{{ i.g }}</td>
+                    <td class="subject" style="max-width: 100px; overflow: hidden;text-overflow:ellipsis">{{ i.a }}</td>
+                    <td >
+                        <a href="/delete/please/?id={{ i.id }}" style="text-decoration: none;color: #03e9f4;font-weight: 550;">撤销</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+            <div id="contextMenu" style="display:none">
+                  <ul>
+                    <li><a href="#" style="text-decoration: none;" id="copyMenuItem" onclick="copyCell()">复制</a></li>
+                  </ul>
+                </div>
+    </div>
+        </div>
+
+        <div class="box3" style="position: absolute;overflow-y:scroll;-webkit-scroll-snap-type: 0">
+            <div class="container">
+        <h2>邀请(对方)</h2>
+        <table id="myTable1">
+            <thead>
+                <tr>
+                    <th>状态</th>
+                    <th>邀请人</th>
+                    <th> 《p,g》  </th>
+                    <th>私钥a</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for i in form2 %}
+                <tr>
+                {% if i.view == '0' %}
+                    <td class="sender">未处理</td>
+                    {% elif i.view == '1' %}
+                    <td class="sender" style="color:red;">已拒绝</td>
+                    {% else %}
+                    <td class="sender">已同意</td>
+                    {% endif %}
+
+                    <td class="sender">{{ i.user1 }}</td>
+                    <td class="subject" style="max-width: 100px; overflow: hidden;text-overflow:ellipsis">{{ i.p }},{{ i.g }}</td>
+                    <td class="subject" style="max-width: 100px; overflow: hidden;text-overflow:ellipsis">{{ i.a }}</td>
+                    <td >
+                        <a href="/agree/please/?id={{ i.id }}" style="text-decoration: none;color: #03e9f4;font-weight: 550;">同意</a>
+                        <a href="/refuse/please/?id={{ i.id }}" style="text-decoration: none;color: #03e9f4;font-weight: 550;">拒绝</a>
+                        {% if i.view == '1' %}
+                    <a href="/delete/please/?id={{ i.id }}" style="text-decoration: none;color: red;font-weight: 550;">删除</a>
+                    {% endif %}
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+             <div id="contextMenu" style="display:none">
+                  <ul>
+                    <li><a href="#" id="copyMenuItem" onclick="copyCell()">复制</a></li>
+                  </ul>
+                </div>
+    </div>
+        </div>
+
+
+    </div>
+   <script src="{% static 'js/jquary.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+        <script>
+          const myTable = document.getElementById("myTable");
+          const myTable1 = document.getElementById("myTable1");
+          const contextMenu = document.getElementById("contextMenu");
+          const copyMenuItem = document.getElementById("copyMenuItem");
+
+          let selectedCell;
+
+          myTable.addEventListener("contextmenu", e => {
+            e.preventDefault();
+            selectedCell = e.target;
+            contextMenu.style.display = "block";
+            contextMenu.style.left = `${e.pageX - 10}px`;
+            contextMenu.style.top = `${e.pageY - 10}px`;
+          });
+
+          myTable1.addEventListener("contextmenu", e => {
+            e.preventDefault();
+            selectedCell = e.target;
+            contextMenu.style.display = "block";
+            contextMenu.style.left = `${e.pageX - 10}px`;
+            contextMenu.style.top = `${e.pageY - 10}px`;
+          });
+          document.addEventListener("click", e => {
+            contextMenu.style.display = "none";
+          });
+
+          function copyCell() {
+            const text = selectedCell.innerHTML;
+            navigator.clipboard.writeText(text).then(() => {
+              console.log(`已将"${text}"添加到剪贴板。`);
+            }, (err) => {
+              console.error(err);
+            });
+          }
+        </script>
+</body>
+</html>
